@@ -1,0 +1,10 @@
+.button {
+	padding: 0.5em 0.75em;
+	min-width: 100px;
+	background-color: lightgray;
+	font-size: 18px;
+	border: 2px solid gray;
+	transition: background-color 0.15s ease;
+	margin: 10px auto;
+	display: flex;
+}

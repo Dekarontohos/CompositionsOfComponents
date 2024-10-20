@@ -1,0 +1,24 @@
+.fieldLayout {
+	display: grid;
+	grid-template-columns: repeat(3, 150px);
+	grid-template-rows: repeat(3, 150px);
+	gap: 5px;
+	width: 464px;
+	height: 464px;
+	margin: 0 auto;
+	text-align: center;
+	border: 2px solid lightgray;
+	background-color: lightgray;
+}
+
+.cell {
+	width: 150px;
+	height: 150px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 2em;
+	border: 2px solid lightgray;
+	cursor: pointer;
+	background-color: white;
+}
