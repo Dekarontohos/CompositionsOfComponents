@@ -1,17 +1,24 @@
 import styles from "./Information.module.css";
+import PropTypes from "prop-types";
 
-export const InformationLayout = (props) => {
-	return <div className={styles.informationLayout}>{getTextInfo(props)}</div>;
+export const InformationLayout = ({ isDraw, isGameEnded, currentPlayer }) => {
+	const getTextInfo = () => {
+		if (isDraw) {
+			return "Ничья";
+		} else {
+			if (!isDraw && isGameEnded) {
+				return `Победа: ${currentPlayer}`;
+			} else {
+				return `Ходит: ${currentPlayer}`;
+			}
+		}
+	};
+
+	return <div className={styles.informationLayout}>{getTextInfo()}</div>;
 };
 
-const getTextInfo = (data) => {
-	if (data.isDraw) {
-		return "Ничья";
-	} else {
-		if (!data.isDraw && data.isGameEnded) {
-			return `Победа: ${data.currentPlayer}`;
-		} else {
-			return `Ходит: ${data.currentPlayer}`;
-		}
-	}
+InformationLayout.propTypes = {
+	isDraw: PropTypes.bool,
+	isGameEnded: PropTypes.bool,
+	currentPlayer: PropTypes.string,
 };

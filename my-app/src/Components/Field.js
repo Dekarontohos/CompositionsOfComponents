@@ -1,4 +1,5 @@
 import styles from "./Field.module.css";
+import PropTypes from "prop-types";
 
 export const FieldLayout = ({
 	field,
@@ -90,4 +91,13 @@ export const FieldLayout = ({
 	};
 
 	return <div className={styles.fieldLayout}>{getCells()}</div>;
+};
+
+FieldLayout.propTypes = {
+	field: PropTypes.array,
+	setField: PropTypes.func,
+	currentPlayer: PropTypes.string,
+	setCurrentPlayer: PropTypes.func,
+	setIsGameEnded: PropTypes.func,
+	setIsDraw: PropTypes.func,
 };
