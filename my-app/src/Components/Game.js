@@ -2,17 +2,16 @@ import { StrictMode, useState } from "react";
 import { FieldLayout } from "./Field";
 import { InformationLayout } from "./Information";
 import styles from "./Game.module.css";
+import { PlayerTypes } from "./PlayerTypes";
 
 export const GameLayout = () => {
-	const [currentPlayer, setCurrentPlayer] = useState("X");
-	const [isGameEnded, setIsGameEnded] = useState(false);
-	const [isDraw, setIsDraw] = useState(false);
+	const [currentPlayer, setCurrentPlayer] = useState(PlayerTypes[0]);
+	const [status, setStatus] = useState("ход");
 	const [field, setField] = useState(["", "", "", "", "", "", "", "", ""]);
 
 	const ResetGame = () => {
-		setCurrentPlayer("X");
-		setIsGameEnded(false);
-		setIsDraw(false);
+		setCurrentPlayer(PlayerTypes[0]);
+		setStatus("ход");
 		setField(["", "", "", "", "", "", "", "", ""]);
 	};
 
@@ -20,8 +19,7 @@ export const GameLayout = () => {
 		<StrictMode>
 			<div>
 				<InformationLayout
-					isDraw={isDraw}
-					isGameEnded={isGameEnded}
+					status={status}
 					currentPlayer={currentPlayer}
 				></InformationLayout>
 				<FieldLayout
@@ -29,8 +27,7 @@ export const GameLayout = () => {
 					setField={setField}
 					currentPlayer={currentPlayer}
 					setCurrentPlayer={setCurrentPlayer}
-					setIsGameEnded={setIsGameEnded}
-					setIsDraw={setIsDraw}
+					setStatus={setStatus}
 				></FieldLayout>
 				<button className={styles.button} onClick={ResetGame}>
 					Начать заново

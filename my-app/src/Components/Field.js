@@ -1,26 +1,16 @@
 import styles from "./Field.module.css";
 import PropTypes from "prop-types";
+import { WIN_PATTERNS } from "./WinPatterns";
+import { PlayerTypes } from "./PlayerTypes";
 
 export const FieldLayout = ({
 	field,
 	setField,
 	currentPlayer,
 	setCurrentPlayer,
-	setIsGameEnded,
-	setIsDraw,
+	setStatus,
 }) => {
 	const newField = [...field];
-
-	const WIN_PATTERNS = [
-		[0, 1, 2],
-		[3, 4, 5],
-		[6, 7, 8],
-		[0, 3, 6],
-		[1, 4, 7],
-		[2, 5, 8],
-		[0, 4, 8],
-		[2, 4, 6],
-	];
 
 	const getCells = () => {
 		return newField.map((field, index) => (
@@ -37,20 +27,20 @@ export const FieldLayout = ({
 
 	const checkWinner = () => {
 		for (let i = 0; i < WIN_PATTERNS.length; i++) {
-			let X_win = true;
-			let zero_win = true;
+			let player1_win = true;
+			let player2_win = true;
 			for (let j = 0; j < WIN_PATTERNS[i].length; j++) {
-				if (newField[WIN_PATTERNS[i][j]] !== "X") {
-					X_win = false;
+				if (newField[WIN_PATTERNS[i][j]] !== PlayerTypes[0]) {
+					player1_win = false;
 				}
-				if (newField[WIN_PATTERNS[i][j]] !== "0") {
-					zero_win = false;
+				if (newField[WIN_PATTERNS[i][j]] !== PlayerTypes[1]) {
+					player2_win = false;
 				}
-				if (X_win === false && zero_win === false) {
+				if (player1_win === false && player2_win === false) {
 					break;
 				}
 			}
-			if (X_win || zero_win) {
+			if (player1_win || player2_win) {
 				return true;
 			}
 		}
@@ -78,12 +68,17 @@ export const FieldLayout = ({
 				return newField;
 			});
 			if (checkWinner()) {
-				setIsGameEnded(true);
+				setStatus("победа");
 			} else {
 				if (!checkPresenceOfEmptyCells()) {
-					setIsDraw(true);
+					setStatus("ничья");
 				} else {
-					let newCurrentPlayer = currentPlayer === "X" ? "0" : "X";
+					let newCurrentPlayer =
+						currentPlayer === PlayerTypes[0]
+							? PlayerTypes[1]
+							: PlayerTypes[0];
+					console.log(currentPlayer);
+					console.log(newCurrentPlayer);
 					setCurrentPlayer(newCurrentPlayer);
 				}
 			}
