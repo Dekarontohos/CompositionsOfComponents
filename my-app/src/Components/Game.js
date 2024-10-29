@@ -5,14 +5,16 @@ import styles from "./Game.module.css";
 import { PlayerTypes } from "./PlayerTypes";
 
 export const GameLayout = () => {
+	const cellsCount = 9;
+	const arrFields = new Array(cellsCount).fill("");
 	const [currentPlayer, setCurrentPlayer] = useState(PlayerTypes[0]);
 	const [status, setStatus] = useState("ход");
-	const [field, setField] = useState(["", "", "", "", "", "", "", "", ""]);
+	const [field, setField] = useState(arrFields);
 
 	const ResetGame = () => {
 		setCurrentPlayer(PlayerTypes[0]);
 		setStatus("ход");
-		setField(["", "", "", "", "", "", "", "", ""]);
+		setField(arrFields);
 	};
 
 	return (
