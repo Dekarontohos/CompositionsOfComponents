@@ -1,7 +1,20 @@
 import styles from "./Information.module.css";
-import PropTypes from "prop-types";
+import store from "../store";
+import { useState, useEffect } from "react";
 
-export const InformationLayout = ({ status, currentPlayer }) => {
+export const InformationLayout = () => {
+	const [data, setData] = useState(store.getState());
+
+	useEffect(() => {
+		const unsubscribe = store.subscribe(() => {
+			setData(store.getState());
+		});
+		return () => {
+			unsubscribe();
+		};
+	}, []);
+
+	const { status, currentPlayer } = store.getState();
 	const getTextInfo = () => {
 		if (status === "победа") {
 			return `Победа: ${currentPlayer}`;
@@ -13,9 +26,4 @@ export const InformationLayout = ({ status, currentPlayer }) => {
 	};
 
 	return <div className={styles.informationLayout}>{getTextInfo()}</div>;
-};
-
-InformationLayout.propTypes = {
-	status: PropTypes.string,
-	currentPlayer: PropTypes.string,
 };

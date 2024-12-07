@@ -1,15 +1,22 @@
 import styles from "./Field.module.css";
-import PropTypes from "prop-types";
 import { WIN_PATTERNS } from "./WinPatterns";
 import { PlayerTypes } from "./PlayerTypes";
+import store from "../store";
+import { useState, useEffect } from "react";
 
-export const FieldLayout = ({
-	field,
-	setField,
-	currentPlayer,
-	setCurrentPlayer,
-	setStatus,
-}) => {
+export const FieldLayout = () => {
+	const [data, setData] = useState(store.getState());
+	const { field, currentPlayer } = store.getState();
+
+	useEffect(() => {
+		const unsubscribe = store.subscribe(() => {
+			setData(store.getState());
+		});
+		return () => {
+			unsubscribe();
+		};
+	}, []);
+
 	const newField = [...field];
 
 	const getCells = () => {
@@ -64,34 +71,28 @@ export const FieldLayout = ({
 			checkPresenceOfEmptyCells()
 		) {
 			newField[data.target.id] = currentPlayer;
-			setField(() => {
-				return newField;
+			store.dispatch({
+				type: "SET_FIELD",
+				payload: newField,
 			});
 			if (checkWinner()) {
-				setStatus("победа");
+				store.dispatch({ type: "SET_STATUS", payload: "победа" });
 			} else {
 				if (!checkPresenceOfEmptyCells()) {
-					setStatus("ничья");
+					store.dispatch({ type: "SET_STATUS", payload: "ничья" });
 				} else {
 					let newCurrentPlayer =
 						currentPlayer === PlayerTypes[0]
 							? PlayerTypes[1]
 							: PlayerTypes[0];
-					console.log(currentPlayer);
-					console.log(newCurrentPlayer);
-					setCurrentPlayer(newCurrentPlayer);
+					store.dispatch({
+						type: "SET_CURRENT_PLAYER",
+						payload: newCurrentPlayer,
+					});
 				}
 			}
 		}
 	};
 
 	return <div className={styles.fieldLayout}>{getCells()}</div>;
-};
-
-FieldLayout.propTypes = {
-	field: PropTypes.array,
-	setField: PropTypes.func,
-	currentPlayer: PropTypes.string,
-	setCurrentPlayer: PropTypes.func,
-	setStatus: PropTypes.func,
 };
