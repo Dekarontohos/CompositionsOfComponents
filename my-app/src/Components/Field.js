@@ -93,6 +93,5 @@ FieldLayout.propTypes = {
 	setField: PropTypes.func,
 	currentPlayer: PropTypes.string,
 	setCurrentPlayer: PropTypes.func,
-	setIsGameEnded: PropTypes.func,
-	setIsDraw: PropTypes.func,
+	setStatus: PropTypes.func,
 };

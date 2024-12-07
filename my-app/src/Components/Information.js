@@ -16,7 +16,6 @@ export const InformationLayout = ({ status, currentPlayer }) => {
 };
 
 InformationLayout.propTypes = {
-	isDraw: PropTypes.bool,
-	isGameEnded: PropTypes.bool,
+	status: PropTypes.string,
 	currentPlayer: PropTypes.string,
 };
