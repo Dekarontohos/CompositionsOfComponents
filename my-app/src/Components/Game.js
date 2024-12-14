@@ -2,7 +2,7 @@ import { StrictMode } from "react";
 import { FieldLayout } from "./Field";
 import { InformationLayout } from "./Information";
 import styles from "./Game.module.css";
-import store from "../store";
+import store from "../redux/store";
 
 export const GameLayout = () => {
 	const ResetGame = () => {

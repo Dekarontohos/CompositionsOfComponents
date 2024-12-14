@@ -1,7 +1,7 @@
 import styles from "./Field.module.css";
 import { WIN_PATTERNS } from "./WinPatterns";
 import { PlayerTypes } from "./PlayerTypes";
-import store from "../store";
+import store from "../redux/store";
 import { useState, useEffect } from "react";
 
 export const FieldLayout = () => {

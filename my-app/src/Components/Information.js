@@ -1,5 +1,5 @@
 import styles from "./Information.module.css";
-import store from "../store";
+import store from "../redux/store";
 import { useState, useEffect } from "react";
 
 export const InformationLayout = () => {
