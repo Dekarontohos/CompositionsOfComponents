@@ -2,11 +2,13 @@ import { StrictMode } from "react";
 import { FieldLayout } from "./Field";
 import { InformationLayout } from "./Information";
 import styles from "./Game.module.css";
-import store from "../redux/store";
+import { useDispatch } from "react-redux";
+import { RESTART_GAME } from "../Actions";
 
 export const GameLayout = () => {
+	const dispatch = useDispatch();
 	const ResetGame = () => {
-		store.dispatch({ type: "RESTART_GAME" });
+		dispatch(RESTART_GAME);
 	};
 
 	return (

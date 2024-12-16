@@ -1,20 +1,12 @@
 import styles from "./Information.module.css";
-import store from "../redux/store";
-import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { selectCurrentPlayer } from "../Selectors/select-currentPlayer";
+import { selectStatus } from "../Selectors/select-status";
 
 export const InformationLayout = () => {
-	const [data, setData] = useState(store.getState());
+	const currentPlayer = useSelector(selectCurrentPlayer);
+	const status = useSelector(selectStatus);
 
-	useEffect(() => {
-		const unsubscribe = store.subscribe(() => {
-			setData(store.getState());
-		});
-		return () => {
-			unsubscribe();
-		};
-	}, []);
-
-	const { status, currentPlayer } = store.getState();
 	const getTextInfo = () => {
 		if (status === "победа") {
 			return `Победа: ${currentPlayer}`;

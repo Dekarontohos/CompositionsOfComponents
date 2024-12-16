@@ -1,22 +1,16 @@
 import styles from "./Field.module.css";
 import { WIN_PATTERNS } from "./WinPatterns";
 import { PlayerTypes } from "./PlayerTypes";
-import store from "../redux/store";
-import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { selectField } from "../Selectors/select-field";
+import { selectCurrentPlayer } from "../Selectors/select-currentPlayer";
+import { useDispatch } from "react-redux";
+import { SET_CURRENT_PLAYER, SET_FIELD, SET_STATUS } from "../Actions";
 
 export const FieldLayout = () => {
-	const [data, setData] = useState(store.getState());
-	const { field, currentPlayer } = store.getState();
-
-	useEffect(() => {
-		const unsubscribe = store.subscribe(() => {
-			setData(store.getState());
-		});
-		return () => {
-			unsubscribe();
-		};
-	}, []);
-
+	const dispatch = useDispatch();
+	const field = useSelector(selectField);
+	const currentPlayer = useSelector(selectCurrentPlayer);
 	const newField = [...field];
 
 	const getCells = () => {
@@ -71,24 +65,18 @@ export const FieldLayout = () => {
 			checkPresenceOfEmptyCells()
 		) {
 			newField[data.target.id] = currentPlayer;
-			store.dispatch({
-				type: "SET_FIELD",
-				payload: newField,
-			});
+			dispatch(SET_FIELD(newField));
 			if (checkWinner()) {
-				store.dispatch({ type: "SET_STATUS", payload: "победа" });
+				dispatch(SET_STATUS("победа"));
 			} else {
 				if (!checkPresenceOfEmptyCells()) {
-					store.dispatch({ type: "SET_STATUS", payload: "ничья" });
+					dispatch(SET_STATUS("ничья"));
 				} else {
 					let newCurrentPlayer =
 						currentPlayer === PlayerTypes[0]
 							? PlayerTypes[1]
 							: PlayerTypes[0];
-					store.dispatch({
-						type: "SET_CURRENT_PLAYER",
-						payload: newCurrentPlayer,
-					});
+					dispatch(SET_CURRENT_PLAYER(newCurrentPlayer));
 				}
 			}
 		}
