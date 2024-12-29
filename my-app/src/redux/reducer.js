@@ -1,4 +1,4 @@
-import { PlayerTypes } from "../Components/PlayerTypes";
+import { PlayerTypes } from "../Components/GameData/PlayerTypes";
 const cellsCount = 9;
 const arrFields = new Array(cellsCount).fill("");
 
